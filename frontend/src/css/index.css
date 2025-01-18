@@ -1,0 +1,122 @@
+:root {
+  /* Typography */
+  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height: 1.5;
+
+  /* Colors */
+  --color-primary: #646cff;
+  --color-primary-hover: #535bf2;
+  --color-dark-bg: #242424;
+  --color-dark-text: rgba(255, 255, 255, 0.87);
+  --color-light-bg: #ffffff;
+  --color-light-text: #213547;
+  --color-light-hover: #747bff;
+  --button-bg-dark: #1a1a1a;
+  --button-bg-light: #f9f9f9;
+
+  /* Spacing */
+  --button-padding: 0.6em 1.2em;
+
+  /* Font sizes */
+  --font-size-h1: 3.2em;
+  --font-size-button: 1em;
+
+  /* Accessibility and smoothing */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Default colors */
+  color: var(--color-dark-text);
+  background-color: var(--color-dark-bg);
+  color-scheme: light dark;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background-image: url("../assets/image.jpg");
+  background-repeat: repeat;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  text-decoration: inherit;
+  transition: color 0.25s;
+}
+a:hover {
+  color: var(--color-primary-hover);
+}
+a:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: var(--button-padding);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-medium);
+  font-family: inherit;
+  background-color: var(--button-bg-dark);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+button:hover {
+  border-color: var(--color-primary);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: var(--color-light-text);
+    background-color: var(--color-light-bg);
+  }
+  a:hover {
+    color: var(--color-light-hover);
+  }
+  button {
+    background-color: var(--button-bg-light);
+  }
+}
+

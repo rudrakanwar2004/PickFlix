@@ -1,0 +1,63 @@
+/* Full-page container styling */
+.welcome-container {
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    background-image: url('../assets/bg_image2.jpg'); /* Ensure correct path to image */
+    background-size: cover; /* Make the image cover the entire background */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    color: white; /* White text for contrast */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better readability */
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0; 
+    }
+    to {
+        opacity: 1; 
+    }
+}
+
+
+
+/* Logo styling */
+.welcome-logo {
+    width: 150px; /* Adjust size as needed */
+    margin-bottom: 20px; /* Add spacing below the logo */
+    animation: fadeIn 1s ease-in-out; /* Optional animation */
+  }
+
+/* Heading styling */
+.welcome-title {
+    font-size: 3rem; /* Large text size */
+    margin-bottom: 20px; /* Spacing below the heading */
+    text-align: center; /* Center the text */
+    opacity: 0; /* Start invisible */
+    animation: fadeIn 2s 0.5s forwards; /* Apply fade-in effect with delay */
+}
+
+/* Button styling */
+.welcome-button {
+    padding: 15px 30px; /* Button padding */
+    font-size: 1.2rem; /* Button text size */
+    color: white; /* White text */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition */
+    opacity: 0; /* Start invisible */
+    animation: fadeIn 2s 1s forwards; /* Apply fade-in effect with delay */
+}
+
+.welcome-button:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Lighter background on hover */
+    color: black; /* Black text on hover */
+    transform: scale(1.1); /* Slightly enlarge button on hover */
+}
