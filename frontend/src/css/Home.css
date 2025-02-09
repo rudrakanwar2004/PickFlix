@@ -5,6 +5,34 @@
 }
 
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  background-color: black;
+  z-index: 10;
+  width: 100%; /* Matches input width */
+  position: absolute;
+  top: 100%; /* Places it directly below input */
+  left: 0;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+li {
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+li:hover {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+
 
 .search-form {
   max-width: 600px;
@@ -88,9 +116,9 @@
   -moz-box-shadow: 0px 1px 15px 4px rgba(250,250,250,1);
   box-shadow: 0px 1px 15px 4px rgba(250,250,250,1);
 }
-.poster-lg {
+/* .poster-lg {
   display: block;
-}
+} */
 
 .poster-sm {
   display: none; /* Hidden by default for simplicity */
@@ -323,9 +351,9 @@
     display: block;
   }
 
-  .poster-lg {
+  /* .poster-lg {
     display: none;
-  }
+  } */
 }
 
 @media (min-width: 992px) {

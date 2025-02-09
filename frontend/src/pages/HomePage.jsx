@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import "../css/Home.css";
 import axios from "axios";
 import CastModal from "../components/CastModal";
+// import { useMovieContext } from "../contexts/MovieContext";
 import MovieCard from "../components/MovieCard";
+import "../css/Home.css";
+
+
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [suggestions, setSuggestions] = useState([]);
   const [recommendations, setRecommendations] = useState(null);
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
@@ -14,12 +17,18 @@ function HomePage() {
   const [showModal, setShowModal] = useState(false); // New state to handle modal visibility
 
   const [myApiKey, setApiKey] = useState('');
+  // const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
+  // function onFavoriteClick(e, movie) {
+  //   if (isFavorite(movie.id)) removeFromFavorites(movie.id);
+  //   else addToFavorites(movie);
+  // }
+
+
 
   useEffect(() => {
-      fetch('http://localhost:8000/api/get-api-key/')
+      fetch('http://127.0.0.1:8000/api/get-api-key/')
           .then((response) => response.json())
           .then((data) => {
-            console.log("api key here"+data)
               setApiKey(data.api_key);
           })
           .catch((error) => console.error('Error fetching API key:', error));
@@ -39,8 +48,32 @@ function HomePage() {
  
   };
 
+  const handleInputChange = async (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.length > 0) {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/autocomplete/?query=${query}`);
+        const data = await response.json();
+        setSuggestions(data.suggestions || []);
+      } catch (error) {
+        console.error("Error fetching autocomplete:", error);
+      }
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    setSearchQuery(suggestion);
+    setSuggestions([]); // Hide suggestions
+    handleRecommend(suggestion);
+  };
+
   const handleRecommend = async (title) => {
     setLoading(true);
+    setSearchQuery("")
     try {
       const response = await axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=${myApiKey}&query=${title}`
@@ -53,6 +86,7 @@ function HomePage() {
       } else {
         const movieId = results[0].id;
         const movieTitle = results[0].original_title;
+        console.log("movie id"+movieId)
         await movie_recs(movieTitle, movieId,myApiKey);
       }
     } catch (err) {
@@ -65,7 +99,7 @@ function HomePage() {
 
   // Function to handle movie recommendations
   const movie_recs = async (movie_title, movie_id, my_api_key) => {
-    const url = "http://localhost:8000/similarity/"; // Your Django backend endpoint
+    const url = "http://127.0.0.1:8000/similarity/"; // Your Django backend endpoint
     try {
       const response = await axios.post(url, { name: movie_title });
       const recs = response.data.recommendations;
@@ -223,6 +257,7 @@ function HomePage() {
     }
   };
 
+
   
 
   return (
@@ -235,19 +270,30 @@ function HomePage() {
           }
         }}
         className="search-form"
+        style={{ position: "relative" }} // Ensures the dropdown is positioned correctly
       >
         <input
           type="text"
           placeholder="Search for movies..."
           className="search-input"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleInputChange}
         />
         <button type="submit" className="search-button" disabled={loading}>
           Search
         </button>
-      </form>
 
+        {/* Suggestions dropdown */}
+        {suggestions.length > 0 && (
+          <ul>
+            {suggestions.map((suggestion, index) => (
+              <li key={index} onClick={() => handleSelectSuggestion(suggestion)}>
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+      </form>
       <br />
       
       {/* Error Message Section */}
@@ -272,7 +318,6 @@ function HomePage() {
                 <br /><br /><br />
   
                 <div id="mcontent">
-
                   <div className="poster-lg">
                     <img
                       className="poster"
@@ -281,9 +326,10 @@ function HomePage() {
                       width={250}
                       src={movie.poster}
                       alt="Movie Poster"
+                      
                     />
-
-                    
+    
+                    <MovieCard movie={movie} key={movie.imdb_id} />
                   </div>
                   
                   <div id="details">
@@ -383,7 +429,7 @@ function HomePage() {
                           height={360} // Optional: Keep consistent card dimensions
                         />
                         <figcaption className="image-container">
-                        <button className="card-btn btn btn-danger" onClick={() => {handleRecommend(rec.title); setSearchQuery("");  }}>
+                        <button className="card-btn btn btn-danger" onClick={() => {handleRecommend(rec.title);  }}>
                             Know More
                           </button>
                         </figcaption>
