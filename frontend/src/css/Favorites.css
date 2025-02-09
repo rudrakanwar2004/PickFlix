@@ -1,7 +1,31 @@
+.poster-lg {
+  position: relative;
+  display: inline-block;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 10px;  /* Position at the top-right of the image */
+  right: 10px;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.favorite-btn:hover {
+  background: rgba(200, 0, 0, 0.9);
+}
+
+.favorite-btn.active {
+  background: rgba(0, 0, 0, 0.3); 
+}
 
 .favorites {
-  
-  padding: 2rem;
   width: 100%;
   box-sizing: border-box;
 }
@@ -17,7 +41,7 @@
 .favorites-empty {
   text-align: center;
   padding: 4rem 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color:rgba(0,0,0,0.8);
   border-radius: 12px;
   margin: 2rem auto;
   max-width: 600px;
@@ -34,7 +58,6 @@
   font-size: 1.2rem;
   line-height: 1.6;
 }
-
 
 /* Animation for new favorites being added */
 @keyframes fadeIn {

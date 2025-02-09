@@ -1,3 +1,15 @@
+/* Grid Layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  grid-auto-rows: auto;
+  
+  grid-gap: 1rem;
+  padding: 20px; /* Reduced padding */
+}
+
+/* Movie Card Styling */
 .movie-card {
   position: relative;
   border-radius: 8px;
@@ -7,12 +19,16 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 240px; /* Restrict max width */
+  width: 100%;
+  margin: 0; /* Removed centering */
 }
 
 .movie-card:hover {
   transform: translateY(-5px);
 }
 
+/* Movie Poster */
 .movie-poster {
   position: relative;
   aspect-ratio: 2/3;
@@ -25,17 +41,14 @@
   object-fit: cover;
 }
 
+/* Movie Overlay for Hover Effect */
 .movie-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.8)
-  );
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.8));
   opacity: 0;
   transition: opacity 0.2s;
   display: flex;
@@ -48,6 +61,7 @@
   opacity: 1;
 }
 
+/* Favorite Button */
 .favorite-btn {
   position: absolute;
   top: 1rem;
@@ -73,16 +87,7 @@
   color: #ff4757;
 }
 
-.rating-select {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
+/* Movie Info Section */
 .movie-info {
   padding: 1rem;
   flex: 1;
@@ -101,15 +106,30 @@
   font-size: 0.9rem;
 }
 
+/* User Rating */
 .user-rating {
   color: #ffd700;
   font-size: 0.9rem;
   margin-top: auto;
 }
 
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Slightly smaller */
+    gap: 10px; /* Reduced gap */
+  }
+}
+
 @media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px; /* Smaller gap */
+  }
+
   .movie-card {
     font-size: 0.9rem;
+    max-width: 200px;
   }
 
   .movie-info {
@@ -120,5 +140,16 @@
     width: 32px;
     height: 32px;
     font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px; /* Smaller gap for mobile */
+  }
+
+  .movie-card {
+    max-width: 180px;
   }
 }

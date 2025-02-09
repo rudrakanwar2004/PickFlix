@@ -87,11 +87,11 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: var(--button-padding);
+  /* padding: var(--button-padding); */
   font-size: var(--font-size-button);
   font-weight: var(--font-weight-medium);
   font-family: inherit;
-  background-color: var(--button-bg-dark);
+  background-color:transparent;
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s;
 }
