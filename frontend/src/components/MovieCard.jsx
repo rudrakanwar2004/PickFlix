@@ -1,62 +1,35 @@
-import "../css/MovieCard.css"
-import { useMovieContext } from "../contexts/MovieContext"
+import "../css/MovieCard.css";
+import { useMovieContext } from "../contexts/MovieContext";
+import { useState, useEffect } from "react";
 
-function MovieCard({movie}) {
-    const {isFavorite, addToFavorites, removeFromFavorites} = useMovieContext()
-    const favorite = isFavorite(movie.id)
+function MovieCard({ movie }) {
+    const { favorites, addToFavorites, removeFromFavorites } = useMovieContext();
+    
+    const [isFav, setIsFav] = useState(false);
+
+    useEffect(() => {
+        setIsFav(favorites.some(fav => fav.imdb_id === movie.imdb_id));
+    }, [favorites, movie]);  // Now updates when movie changes
 
     function onFavoriteClick(e) {
-        e.preventDefault()
-        if (favorite) removeFromFavorites(movie.id)
-        else addToFavorites(movie)
+        e.preventDefault();
+        if (isFav) {
+            removeFromFavorites(movie.imdb_id);
+        } else {
+            addToFavorites(movie);
+        }
     }
 
-    return <div className="movie-card">
-        <div className="movie-poster">
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster}`} alt={movie.title}/>
-            <div className="movie-overlay">
-                <button className={`favorite-btn ${favorite ? "active" : ""}`} onClick={onFavoriteClick}>
+    return (
+            <div className="movie-info">
+                <button
+                    className={`favorite-btn ${isFav ? "active" : ""}`}
+                    onClick={onFavoriteClick}
+                >
                     ♥
                 </button>
             </div>
-        </div>
-        <div className="movie-info">
-            <h3>{movie.title1}</h3>
-            <p>{movie.release_date}</p>
-        </div>
-    </div>
+    );
 }
 
-export default MovieCard
-
-
-// import React from "react";
-
-// function MovieCard({ movie, isFavorite, toggleFavorite }) {
-//   return (
-//     <div className="movie-card">
-//       <div className="poster-lg">
-//         <img
-//           className="poster"
-//           style={{ borderRadius: "40px", marginLeft: "80px" }}
-//           height={400}
-//           width={250}
-//           src={movie.poster}
-//           alt="Movie Poster"
-//         />
-//         {/* Favorite Icon */}
-//         <div className="favorite-icon" onClick={() => toggleFavorite(movie)}>
-//           {isFavorite ? "❤️" : "🤍"}
-//         </div>
-//       </div>
-
-//       <div className="movie-details">
-//         <h2>{movie.title1}</h2>
-//         <p>Rating: {movie.rating}/10</p>
-//         <p>Release Date: {movie.release_date}</p>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default MovieCard;
+export default MovieCard;
