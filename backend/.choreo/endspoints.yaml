@@ -1,0 +1,7 @@
+version: 0.1
+endpoints:
+  - name: "PicFlix"
+    port: 8000  # Port on which the service is running
+    type: REST  # Type of the service
+    network visibility: Public  # Public or private
+    context: /  # Context of the service
