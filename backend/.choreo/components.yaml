@@ -1,7 +1,17 @@
-version: 0.1
+# version: 0.1
+# endpoints:
+#   - name: "PicFlix"
+#     port: 8000  # Port on which the service is running
+#     type: REST  # Type of the service
+#     network visibility: Public  # Public or private
+#     context: /  # Context of the service
+schemaVersion: 1.0 
+ # Example endpoint configuration
 endpoints:
-  - name: "PicFlix"
-    port: 8000  # Port on which the service is running
-    type: REST  # Type of the service
-    network visibility: Public  # Public or private
-    context: /  # Context of the service
+- name: PicFlix
+  service:
+     port: 8000
+     basePath: /
+  networkVisibilities: 
+  - Public
+  type: REST
