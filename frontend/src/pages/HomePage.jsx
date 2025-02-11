@@ -23,10 +23,11 @@ function HomePage() {
   //   else addToFavorites(movie);
   // }
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
   useEffect(() => {
-      fetch('http://127.0.0.1:8000/api/get-api-key/')
+    fetch(`${BACKEND_URL}/api/get-api-key/`) // Fetch API key from Django backend
           .then((response) => response.json())
           .then((data) => {
               setApiKey(data.api_key);
@@ -54,7 +55,7 @@ function HomePage() {
 
     if (query.length > 0) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/autocomplete/?query=${query}`);
+        const response = await fetch(`${BACKEND_URL}/api/autocomplete/?query=${query}`);
         const data = await response.json();
         setSuggestions(data.suggestions || []);
       } catch (error) {
@@ -98,7 +99,7 @@ function HomePage() {
 
   // Function to handle movie recommendations
   const movie_recs = async (movie_title, movie_id, my_api_key) => {
-    const url = "http://127.0.0.1:8000/similarity/"; // Your Django backend endpoint
+    const url = BACKEND_URL+"/similarity/"; // Your Django backend endpoint
     try {
       const response = await axios.post(url, { name: movie_title });
       const recs = response.data.recommendations;
