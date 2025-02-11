@@ -1,10 +1,11 @@
-schemaVersion: 1.0 
- # Example endpoint configuration
+schemaVersion: "1.1"
 endpoints:
-- name: pickflix
-  service:
-     port: 8000
-     basePath: /
-  networkVisibilities: 
-  - Public
-  type: REST
+    - name: pickflix
+      displayName: pickflix
+      service:
+        basePath: /
+        port: 8000
+      type: REST
+      networkVisibilities:
+        - Public
+      schemaFilePath: .
