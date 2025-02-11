@@ -25,10 +25,7 @@ function HomePage() {
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const conn_url = "https://d20dac28-8784-48da-bf70-dcb274ddc96a-dev.e1-us-east-azure.choreoapis.dev/pickflix/backend/v1";
-  console.log("Backend URL: ", BACKEND_URL ? BACKEND_URL : conn_url);
-  const api = axios.create({ 
-    baseURL: BACKEND_URL ? BACKEND_URL : conn_url,
-  });
+  const api = BACKEND_URL ? BACKEND_URL : conn_url;
   useEffect(() => {
     fetch(`${api}/api/get-api-key/`) // Fetch API key from Django backend
           .then((response) => response.json())
