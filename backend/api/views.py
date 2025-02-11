@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 import os
-import joblib
+import pickle
 import requests
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -13,11 +13,25 @@ import json
 
 # Load the movie data and similarity matrix
 # Loading with joblib
-movies_dict = joblib.load('movie_dict1.pkl')
-similarity_matrix = joblib.load('similarity1.pkl')
+# Saving object with pickle
+
+# Loading object with pickle
+with open('movie_dict1.pkl', 'rb') as f:
+    movies_dict = pickle.load(f)
+
+with open('movie_dict1.pkl', 'wb') as f:
+    pickle.dump(movies_dict, f)
+
+
+# Loading object with pickle
+with open('similarity1.pkl', 'rb') as f:
+    similarity_matrix = pickle.load(f)
+
+with open('similarity1.pkl', 'wb') as f:
+    pickle.dump(similarity_matrix, f)
+
+
 movies = pd.DataFrame(movies_dict)
-joblib.dump(movies_dict, 'movie_dict1.pkl')
-joblib.dump(similarity_matrix, 'similarity1.pkl')
 api_key = os.getenv("API_KEY")
 
 # Function to get API key
