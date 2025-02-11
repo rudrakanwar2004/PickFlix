@@ -10,12 +10,34 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import json
+import gdown
 
+#csv_file_id = "1pR_l76EHZ5CzguLDWptUJL7KH8aDCI5u"
 # Load the movie data and similarity matrix
-movies_dict = pickle.load(open('movie_dict1.pkl', 'rb'))
+# movies_dict = pickle.load(open('movie_dict1.pkl', 'rb'))
+# movies = pd.DataFrame(movies_dict)
+# similarity_matrix = pickle.load(open('similarity1.pkl', 'rb'))
+
+
+#
+#
+movie_dict_file_id = "1F4gVK_9_mLWlMOaOrCjgHGRO7QUpnkbd"
+movie_dict_path  = "movie_dict.pkl"
+gdown.download(f"https://drive.google.com/uc?export=download&id={movie_dict_file_id}", movie_dict_path, quiet=False)
+
+similarity_matrix_file_id = "1IE5ohsbHsEBprCi-aaZ-aKRW7yJSLTb0"
+similarity_matrix_path  = "similarity.pkl"
+gdown.download(f"https://drive.google.com/uc?export=download&id={similarity_matrix_file_id}", similarity_matrix_path , quiet=False)
+
+
+
+movies_dict = pickle.load(open(movie_dict_path, 'rb'))
 movies = pd.DataFrame(movies_dict)
-similarity_matrix = pickle.load(open('similarity1.pkl', 'rb'))
+
+similarity_matrix = pickle.load(open(similarity_matrix_path, 'rb'))
+
 api_key = os.getenv("API_KEY")
+
 
 # Function to get API key
 def get_api_key(request):
