@@ -73,7 +73,6 @@ function HomePage() {
 
   const handleRecommend = async (title) => {
     setLoading(true);
-    setSearchQuery("")
     try {
       const response = await axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=${myApiKey}&query=${title}`
@@ -429,7 +428,8 @@ function HomePage() {
                           height={360} // Optional: Keep consistent card dimensions
                         />
                         <figcaption className="image-container">
-                        <button className="card-btn btn btn-danger" onClick={() => {handleRecommend(rec.title);  }}>
+                        <button className="card-btn btn btn-danger" onClick={() => {handleRecommend(rec.title);     setSearchQuery("")
+ }}>
                             Know More
                           </button>
                         </figcaption>

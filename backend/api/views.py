@@ -12,26 +12,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 import json
 
 # Load the movie data and similarity matrix
-# Loading with joblib
-# Saving object with pickle
-
-# Loading object with pickle
-with open('movie_dict1.pkl', 'rb') as f:
-    movies_dict = pickle.load(f)
-
-with open('movie_dict1.pkl', 'wb') as f:
-    pickle.dump(movies_dict, f)
-
-
-# Loading object with pickle
-with open('similarity1.pkl', 'rb') as f:
-    similarity_matrix = pickle.load(f)
-
-with open('similarity1.pkl', 'wb') as f:
-    pickle.dump(similarity_matrix, f)
-
-
+movies_dict = pickle.load(open('movie_dict1.pkl', 'rb'))
 movies = pd.DataFrame(movies_dict)
+similarity_matrix = pickle.load(open('similarity1.pkl', 'rb'))
 api_key = os.getenv("API_KEY")
 
 # Function to get API key
