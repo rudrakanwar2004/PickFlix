@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 import os
-import pickle
+import joblib
 import requests
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -12,9 +12,12 @@ from sklearn.metrics.pairwise import cosine_similarity
 import json
 
 # Load the movie data and similarity matrix
-movies_dict = pickle.load(open('movie_dict1.pkl', 'rb'))
+# Loading with joblib
+movies_dict = joblib.load('movie_dict1.pkl')
+similarity_matrix = joblib.load('similarity1.pkl')
 movies = pd.DataFrame(movies_dict)
-similarity_matrix = pickle.load(open('similarity1.pkl', 'rb'))
+joblib.dump(movies_dict, 'movie_dict1.pkl')
+joblib.dump(similarity_matrix, 'similarity1.pkl')
 api_key = os.getenv("API_KEY")
 
 # Function to get API key
