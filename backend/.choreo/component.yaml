@@ -1,7 +1,7 @@
 schemaVersion: "1.1"
 endpoints:
     - name: pickflix
-      displayName: pickfli
+      displayName: pickflix
       service:
         port: 8000
       type: REST
