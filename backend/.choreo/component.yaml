@@ -1,11 +1,20 @@
-schemaVersion: "1.1"
+# schemaVersion: "1.1"
+# endpoints:
+#     - name: pickflix
+#       displayName: pickflix
+#       service:
+#         basePath: /
+#         port: 8000
+#       type: REST
+#       networkVisibilities:
+#         - Public
+#       schemaFilePath: .
+schemaVersion: 1.0 
 endpoints:
-    - name: pickflix
-      displayName: pickflix
-      service:
-        basePath: /
-        port: 8000
-      type: REST
-      networkVisibilities:
-        - Public
-      schemaFilePath: .
+- name: pickflix
+  service:
+     basePath: /
+     port: 8000
+  type: REST
+  networkVisibilities:
+    - Public
