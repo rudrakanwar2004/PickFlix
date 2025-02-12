@@ -14,7 +14,7 @@ Welcome to the **Movie Recommendation System**, an AI-powered platform that sugg
 - **Python:** Backend scripting and data processing. Uses Naive Bayes Classifier and Cosine Similarity Based Algorithms for movie recommendations.
 - **React+Vite:** For web-based interface and fast development.
 - **Django:** Backend framework for handling API requests and movie data.
-- **Docker:** Containerization for smooth deployment.
+- **Choreo:**: Cloud platform for backend deployment.
 
 ## ⚙️ Getting Started
 
@@ -23,15 +23,16 @@ Welcome to the **Movie Recommendation System**, an AI-powered platform that sugg
 git clone https://github.com/yourusername/movie-recommendation-system.git
 ```
 
-### 2. Install Backend Dependcies
+### 2. Install Backend Dependencies
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-### 3. Install Frontend Dependcies
+### 3. Install Frontend Dependencies
 ```bash
-
+cd frontend
+npm install
 ```
 
 ### 4. Run Django Backend
@@ -45,4 +46,8 @@ Navigate to frontend folder and run the below command
 ```bash
 npm run dev
 ```
+### 6. Access the Deployed Version
+
+The system is deployed on Choreo. You can access the live version :-
+https://189b2ed2-b21e-4c8b-a27a-f0e5ab40d551.e1-us-east-azure.choreoapps.dev/ 
 
