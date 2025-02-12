@@ -36,6 +36,10 @@ movies = pd.DataFrame(movies_dict)
 
 similarity_matrix = pickle.load(open(similarity_matrix_path, 'rb'))
 
+
+CSV_FILE_ID = "1pR_l76EHZ5CzguLDWptUJL7KH8aDCI5u"
+CSV_FILE_PATH = "final_data.csv"
+
 api_key = os.getenv("API_KEY")
 
 
@@ -97,15 +101,35 @@ def autocomplete(request):
 
 # Function to create similarity matrix (used for CSV-based system)
 def create_similarity():
-    data = pd.read_csv('final_data1.csv')
+    if not os.path.exists(CSV_FILE_PATH):
+        print("Downloading dataset from Google Drive...")
+        gdown.download(f"https://drive.google.com/uc?export=download&id={CSV_FILE_ID}", CSV_FILE_PATH, quiet=False)
+    else:
+        print("Dataset already exists locally. Skipping download.")
+
+    # Read CSV file
+    data = pd.read_csv(CSV_FILE_PATH)
+
+    # Ensure 'comb' column exists
+    if 'comb' not in data.columns:
+        raise KeyError("Column 'comb' not found in CSV file.")
+
+    # Compute CountVectorizer and similarity matrix
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(data['comb'])
     similarity = cosine_similarity(count_matrix)
+
     return data, similarity
+    # data = pd.read_csv('final_data1.csv')
+    # cv = CountVectorizer()
+    # count_matrix = cv.fit_transform(data['comb'])
+    # similarity = cosine_similarity(count_matrix)
+    # return data, similarity
 
 # Recommendation function based on CSV dataset
 @csrf_exempt
 def similarity(request):
+    print(request.method)
     if request.method == "POST":
         movie_title = json.loads(request.body).get('name', '').lower()
         recommendations = rcmd(movie_title)
