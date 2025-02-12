@@ -19,21 +19,26 @@ import gdown
 # similarity_matrix = pickle.load(open('similarity1.pkl', 'rb'))
 
 
-#
-#
+# Function to download files from Google Drive
 movie_dict_file_id = "1F4gVK_9_mLWlMOaOrCjgHGRO7QUpnkbd"
 movie_dict_path  = "movie_dict.pkl"
-gdown.download(f"https://drive.google.com/uc?export=download&id={movie_dict_file_id}", movie_dict_path, quiet=False)
 
 similarity_matrix_file_id = "1IE5ohsbHsEBprCi-aaZ-aKRW7yJSLTb0"
 similarity_matrix_path  = "similarity.pkl"
-gdown.download(f"https://drive.google.com/uc?export=download&id={similarity_matrix_file_id}", similarity_matrix_path , quiet=False)
 
+def download_file(file_id, file_path):
+    if not os.path.exists(file_path):
+        print(f"Downloading {file_path} from Google Drive...")
+        gdown.download(f"https://drive.google.com/uc?export=download&id={file_id}", file_path, quiet=False)
+    else:
+        print(f"{file_path} already exists. Skipping download.")
 
+# Download the pickle files only if they are missing
+download_file(movie_dict_file_id, movie_dict_path)
+download_file(similarity_matrix_file_id, similarity_matrix_path)
 
 movies_dict = pickle.load(open(movie_dict_path, 'rb'))
 movies = pd.DataFrame(movies_dict)
-
 similarity_matrix = pickle.load(open(similarity_matrix_path, 'rb'))
 
 
@@ -129,7 +134,6 @@ def create_similarity():
 # Recommendation function based on CSV dataset
 @csrf_exempt
 def similarity(request):
-    print(request.method)
     if request.method == "POST":
         movie_title = json.loads(request.body).get('name', '').lower()
         recommendations = rcmd(movie_title)
