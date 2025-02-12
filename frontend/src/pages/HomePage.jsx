@@ -73,24 +73,38 @@ function HomePage() {
   };
 
   const handleRecommend = async (title) => {
+    if (!myApiKey) {
+      setError("API Key not loaded yet.");
+      return;
+    }
+
     setLoading(true);
+    setError(null); // Clear previous errors
+
     try {
       const response = await axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=${myApiKey}&query=${title}`
       );
 
       const results = response.data.results;
-      if (results.length < 1) {
+      if (results.length === 0) {
         setError("No movie recommendations found.");
         setRecommendations(null);
+        return;
+      }
+
+      const { id: movieId, original_title: movieTitle } = results[0];
+      console.log("Movie ID:", movieId);
+
+      // Ensure movie_recs is defined before calling
+      if (typeof movie_recs === "function") {
+        await movie_recs(movieTitle, movieId, myApiKey);
       } else {
-        const movieId = results[0].id;
-        const movieTitle = results[0].original_title;
-        console.log("movie id"+movieId)
-        await movie_recs(movieTitle, movieId,myApiKey);
+        console.error("movie_recs function is not defined.");
+        setError("Internal error: Recommendation function missing.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching recommendations:", err);
       setError("Failed to fetch recommendations.");
     } finally {
       setLoading(false);
