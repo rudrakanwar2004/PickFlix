@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import '../css/Navbar.css';
-
+import text from '../assets/text.png';
 function NavBar() {
   return (
     <nav className="navbar">
       {/* Brand Logo */}
       <div className="navbar-brand">
         <Link to="/home">
-          <img src="/src/assets/text.png" alt="Pickflix Logo" className="logo-image" />
+          <img src={text} alt="Pickflix Logo" className="logo-image" />
         </Link>
       </div>
 
