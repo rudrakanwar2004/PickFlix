@@ -27,7 +27,7 @@ PickFlix uses advanced machine learning algorithms (such as cosine similarity an
 ![Search Page](screenshots/homepage1.png)
 
 ### ❤️ Favorites
-![Favorites Page](screenshots/login.png)
+![Favorites Page](screenshots/favourites.png)
 
 ### 🎯 Recommendations
 ![Recommendations Page](screenshots/recommendations.png)
