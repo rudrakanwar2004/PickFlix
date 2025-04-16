@@ -72,8 +72,15 @@ function HomePage() {
     if (query.length > 0) {
       try {
         const response = await fetch(`${api}/api/autocomplete/?query=${query}`);
-        const data = await response.json();
-        setSuggestions(data.suggestions || []);
+        const text = await response.text();
+        console.log("Raw response text:", text);
+
+        try {
+          const data = JSON.parse(text);
+          setSuggestions(data.suggestions || []);
+        } catch (e) {
+          console.error("Failed to parse JSON:", e);
+        }
       } catch (error) {
         console.error("Error fetching autocomplete:", error);
       }
@@ -90,6 +97,7 @@ function HomePage() {
 
   const handleRecommend = async (title) => {
     if (!myApiKey) {
+      console.log("API URL:", `${api}/api/autocomplete/?query=${query}`);
       setError("API Key not loaded yet.");
       return;
     }
