@@ -32,9 +32,11 @@ function HomePage() {
           .then((data) => {
               setApiKey(data.api_key);
           })
-          .catch(
-            console.log("API URL:", `${api}/api/autocomplete/?query=${query}`),
-            (error) => console.error('Error fetching API key:', error));
+          .catch((error) => {
+            console.log("API URL:", `${api}/api/get-api-key/`);
+            console.error('Error fetching API key:', error);
+          });
+          
   }, []);
  
 
