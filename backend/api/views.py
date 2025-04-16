@@ -1,8 +1,16 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes,action
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from rest_framework import generics
+from .serializers import UserSerializer
+from .models import Favourite
+from .serializers import FavouriteSerializer 
+
+
 import os
 import pickle
 import requests
@@ -11,6 +19,52 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import json
 import gdown
+
+# Create a user 
+
+class CreateUserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+
+
+# Create a favourite movie list for the user
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_favourites(request):
+    favourites = Favourite.objects.filter(user=request.user)
+    serializer = FavouriteSerializer(favourites, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_favourite(request):
+    user = request.user
+    movie_id = request.data.get('movie_id')
+    title = request.data.get('title')
+    poster = request.data.get('poster')
+
+    if Favourite.objects.filter(user=user, movie_id=movie_id).exists():
+        return Response({'message': 'Movie already in favourites'}, status=400)
+
+    Favourite.objects.create(user=user, movie_id=movie_id, title=title, poster=poster)
+    return Response({'message': 'Added to favourites'})
+
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_favourite(request, movie_id):
+    user = request.user
+    try:
+        fav = Favourite.objects.get(user=user, movie_id=movie_id)
+        fav.delete()
+        return Response({'message': 'Removed from favourites'}, status=204)
+    except Favourite.DoesNotExist:
+        return Response({'message': 'Favourite not found'}, status=404)
+
 
 #csv_file_id = "1pR_l76EHZ5CzguLDWptUJL7KH8aDCI5u"
 # Load the movie data and similarity matrix

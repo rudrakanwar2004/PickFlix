@@ -4,6 +4,7 @@ import CastModal from "../components/CastModal";
 // import { useMovieContext } from "../contexts/MovieContext";
 import MovieCard from "../components/MovieCard";
 import "../css/Home.css";
+import movieTrailer from "movie-trailer";
 
 
 function HomePage() {
@@ -15,6 +16,7 @@ function HomePage() {
   const [loading, setLoading] = useState(false);
   const [selectedCast, setSelectedCast] = useState(null); // New state to track selected cast
   const [showModal, setShowModal] = useState(false); // New state to handle modal visibility
+  const [trailerUrl, setTrailerUrl] = useState("");
 
   const [myApiKey, setApiKey] = useState('');
   // const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
@@ -48,6 +50,22 @@ function HomePage() {
     setSelectedCast(null);
  
   };
+
+  // Fetch trailer when a movie is available
+  useEffect(() => {
+    if (movies.length > 0) {
+      const movie = movies[0];
+      movieTrailer(movie.title1)
+        .then((url) => {
+          const videoId = extractYouTubeId(url);
+          setTrailerUrl(videoId);
+        })
+        .catch((err) => {
+          console.error("Trailer not found", err);
+          setTrailerUrl("");
+        });
+      }
+    }, [movies]);
 
   const handleInputChange = async (e) => {
     const query = e.target.value;
@@ -395,6 +413,26 @@ function HomePage() {
                   </div>
                 </div>
 
+                
+                {/* ✅ Trailer Section */}
+                {trailerUrl && (
+                  <div style={{ marginTop: "30px", textAlign: "center" }}>
+                    <h3 style={{ color: "white" }}>Watch Trailer</h3>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <iframe
+                        width="700"
+                        height="400"
+                        src={`https://www.youtube.com/embed/${trailerUrl}`}
+                        title="Movie Trailer"
+                        style={{ border: "none" }}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  </div>
+                )}
+        
+
                 <br /><br />
 
                 <center><h2>Top Cast</h2></center>
@@ -443,8 +481,7 @@ function HomePage() {
                           height={360} // Optional: Keep consistent card dimensions
                         />
                         <figcaption className="image-container">
-                        <button className="card-btn btn btn-danger" onClick={() => {handleRecommend(rec.title);     setSearchQuery("")
- }}>
+                        <button className="card-btn btn btn-danger" onClick={() => {handleRecommend(rec.title);     setSearchQuery("")}}>
                             Know More
                           </button>
                         </figcaption>
@@ -474,5 +511,12 @@ function toTitleCase(str) {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
+function extractYouTubeId(url) {
+  const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : url;
+}
+
 export default HomePage;
 

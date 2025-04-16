@@ -1,0 +1,48 @@
+.account-info-container {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color:rgba(0,0,0,0.8);
+    border-radius: 12px;
+    margin: 2rem auto;
+    max-width: 600px;
+  }
+
+  
+.account-info-container h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #e50914;
+  }
+  
+.account-info-container p {
+    color: #999;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #f40612; /* Darker red on hover */
+  }
+  
+  .arrow-icon {
+    margin-right: 10px; /* Space between the arrow and text */
+  }
+  
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+    fill: white; /* Ensure the icon color matches text color */
+  }
+  
