@@ -27,16 +27,14 @@ function HomePage() {
 
 
   useEffect(() => {
-    fetch(`${api}/api/get-api-key/`) // Fetch API key from Django backend
-          .then((response) => response.json())
-          .then((data) => {
-              setApiKey(data.api_key);
-          })
-          .catch((error) => {
-            console.log("API URL:", `${api}/api/get-api-key/`);
-            console.error('Error fetching API key:', error);
-          });
-          
+    // Fetch API key from Django backend
+    api.get("/api/get-api-key/")
+      .then((response) => {
+        setApiKey(response.data.api_key);
+      })
+      .catch((error) => {
+        console.error('Error fetching API key:', error);
+      });
   }, []);
  
 
@@ -75,8 +73,7 @@ function HomePage() {
 
     if (query.length > 0) {
       try {
-        const response = await fetch(`${api}/api/autocomplete/?query=${query}`);
-        console.log("API URL:", `${api}/api/autocomplete/?query=${query}`);
+        const response = await api.get(`/api/autocomplete/?query=${query}`);
         const data = await response.json();
         setSuggestions(data.suggestions || []);
       } catch (error) {
@@ -134,9 +131,8 @@ function HomePage() {
 
   // Function to handle movie recommendations
   const movie_recs = async (movie_title, movie_id, my_api_key) => {
-    const url = api+"/similarity/"; // Your Django backend endpoint
     try {
-      const response = await axios.post(url, { name: movie_title });
+      const response = await api.post("/similarity/", { name: movie_title });
       const recs = response.data.recommendations;
 
       if (!recs || recs.length < 1) {
