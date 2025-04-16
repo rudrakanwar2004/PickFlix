@@ -120,12 +120,7 @@ npm run dev
 
 ### 6. Access the Application
 - **Local Version:** Open your browser at `http://localhost:3000` (or the URL specified by Vite).
-- **Deployed Version:** [Link to Live Version on Choreo] (if available)
-
-
-### 7. Access the Deployed Version
-
-The system is deployed on Choreo. You can access the live version :- https://64078db8-2ccd-4a07-ac83-56b1ddb7efd9.e1-us-east-azure.choreoapps.dev
+- **Deployed Version:** The system is deployed on Choreo. You can access the live version :- https://64078db8-2ccd-4a07-ac83-56b1ddb7efd9.e1-us-east-azure.choreoapps.dev
 
 ---
 
