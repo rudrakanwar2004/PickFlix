@@ -67,22 +67,21 @@ function HomePage() {
       }
     }, [movies]);
 
-  const handleInputChange = async (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    if (query.length > 0) {
-      try {
-        const response = await api.get(`/api/autocomplete/?query=${query}`);
-        const data = await response.json();
-        setSuggestions(data.suggestions || []);
-      } catch (error) {
-        console.error("Error fetching autocomplete:", error);
+    const handleInputChange = async (e) => {
+      const query = e.target.value;
+      setSearchQuery(query);
+    
+      if (query.length > 0) {
+        try {
+          const response = await api.get(`/api/autocomplete/?query=${query}`);
+          setSuggestions(response.data.suggestions || []);
+        } catch (error) {
+          console.error("Error fetching autocomplete:", error);
+        }
+      } else {
+        setSuggestions([]);
       }
-    } else {
-      setSuggestions([]);
-    }
-  };
+    };
 
   const handleSelectSuggestion = (suggestion) => {
     setSearchQuery(suggestion);
