@@ -32,7 +32,9 @@ function HomePage() {
           .then((data) => {
               setApiKey(data.api_key);
           })
-          .catch((error) => console.error('Error fetching API key:', error));
+          .catch(
+            console.log("API URL:", `${api}/api/autocomplete/?query=${query}`),
+            (error) => console.error('Error fetching API key:', error));
   }, []);
  
 
@@ -72,15 +74,9 @@ function HomePage() {
     if (query.length > 0) {
       try {
         const response = await fetch(`${api}/api/autocomplete/?query=${query}`);
-        const text = await response.text();
-        console.log("Raw response text:", text);
-
-        try {
-          const data = JSON.parse(text);
-          setSuggestions(data.suggestions || []);
-        } catch (e) {
-          console.error("Failed to parse JSON:", e);
-        }
+        console.log("API URL:", `${api}/api/autocomplete/?query=${query}`);
+        const data = await response.json();
+        setSuggestions(data.suggestions || []);
       } catch (error) {
         console.error("Error fetching autocomplete:", error);
       }
@@ -97,7 +93,6 @@ function HomePage() {
 
   const handleRecommend = async (title) => {
     if (!myApiKey) {
-      console.log("API URL:", `${api}/api/autocomplete/?query=${query}`);
       setError("API Key not loaded yet.");
       return;
     }
