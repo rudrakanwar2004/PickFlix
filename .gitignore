@@ -12,6 +12,7 @@ __pycache__
 
 # Env files
 .env
+myvenv/
 # Logs
 logs
 *.log
