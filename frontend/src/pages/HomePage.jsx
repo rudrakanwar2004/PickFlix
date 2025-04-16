@@ -5,7 +5,7 @@ import CastModal from "../components/CastModal";
 import MovieCard from "../components/MovieCard";
 import "../css/Home.css";
 import movieTrailer from "movie-trailer";
-
+import api from "../api";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,9 +25,7 @@ function HomePage() {
   //   else addToFavorites(movie);
   // }
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const conn_url = "https://d20dac28-8784-48da-bf70-dcb274ddc96a-dev.e1-us-east-azure.choreoapis.dev/pickflix/backend/v1";
-  const api = BACKEND_URL ? BACKEND_URL : conn_url;
+
   useEffect(() => {
     fetch(`${api}/api/get-api-key/`) // Fetch API key from Django backend
           .then((response) => response.json())

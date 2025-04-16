@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { ACCESS_TOKEN } from "./constants";
 
+const conn_url = '/choreo-apis/pickflixupdate/backend/v1'
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api',
+  baseURL: import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL : conn_url,
 });
 
 api.interceptors.request.use(
